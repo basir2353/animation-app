@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useRef } from "react";
+import "./App.css";
+import useWebAnimations, {zoomOutRight} from "@wellyshen/use-web-animations";
 
 function App() {
+  // const targetRef = useRef(null);
+  const { ref, playState, getAnimation } = useWebAnimations({...zoomOutRight})
+  //   keyframes: [
+  //     { transform: "translate(0,0)" },
+  //     { transform: "translate(600px,100px)" },
+  //   ],
+  //   animationOptions: {
+  //     delay: 500,
+  //     duration: 1000,
+  //     iterations: 500,
+  //     direction: "alternate",
+  //     easing: "ease-in-out",
+  //   },
+    
+  // });
+
+  const pauseAnimation = () => {
+    const animation = getAnimation();
+    if (animation) {
+      animation.pause();
+    }
+  };
+
+  const playAnimation = () => {
+    const animation = getAnimation();
+    if (animation) {
+      animation.play();
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="target" ref={ref}>
+        Hello, good morning
+      </div>
+      <div>
+        <div>Play state: {playState}</div>
+        <button onClick={pauseAnimation}>Pause</button>
+        <button onClick={playAnimation}>Play</button>
+      </div>
     </div>
   );
 }
